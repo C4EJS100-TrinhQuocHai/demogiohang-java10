@@ -1,50 +1,52 @@
-/* 
-let listProduct = [
+
+/* let listProduct = [
     {
-        name: " I Phone 5",
+        name: "I Phone 5",
         price: "3000000",
         image: "image/anh1.jpg",
         id: 1,
     },
     {
-        name: " I Phone 6",
+        name: "I Phone 6",
         price: "3000000",
         image: "image/anh2.jpg",
         id: 2,
     },
     {
-        name: " I Phone 7",
+        name: "I Phone 7",
         price: "3000000",
         image: "image/anh1.jpg",
         id: 3,
     },
     {
-        name: " I Phone 8",
+        name: "I Phone 8",
         price: "3000000",
         image: "image/anh4.jpg",
         id: 4,
     },
     {
-        name: " I Phone 9",
+        name: "I Phone 9",
         price: "3000000",
         image: "image/anh5.jpg",
         id: 5,
     },
 ]
-localStorage.setItem("listProducts", JSON.stringify(listProduct));
- */
-function renderListProducts(){
+localStorage.setItem("listProducts", JSON.stringify(listProduct)); */
+
+let listProduct = JSON.parse(localStorage.getItem("listProducts"));
+function renderListProducts(listProductAll){
     let data='';
-    let listProduct = JSON.parse(localStorage.getItem("listProducts"));
-    for (let i = 0; i<listProduct.length; i++) {
+    
+    console.log("listProductAll", listProductAll);
+    for (let i = 0; i<listProductAll.length; i++) {
         data+= `
             <div class="product">
-                <img src="${listProduct[i].image}" alt="">
-                <p> ${listProduct[i].name} </p>
-                <label for="price"> ${listProduct[i].price} </label> <br>
+                <img src="${listProductAll[i].image}" alt="">
+                <p> ${listProductAll[i].name} </p>
+                <label for="price"> ${listProductAll[i].price} </label> <br>
                 <div>
                     <input type="number" value="1">
-                    <i onclick="addToCart(${listProduct[i].id})"
+                    <i onclick="addToCart(${listProductAll[i].id})"
                      class="fa-solid fa-cart-shopping"></i>
                 </div>
             </div>
@@ -52,9 +54,8 @@ function renderListProducts(){
     }
     document.getElementById("showProduct").innerHTML=data;
 }
-renderListProducts();
+renderListProducts(listProduct);
 // function add to cart
-
 function addToCart(id) {
     let listProducts = JSON.parse(localStorage.getItem("listProducts"));
     // console.log("listProduct", listProducts);
@@ -103,4 +104,15 @@ function addToCart(id) {
            }
        }
    }
+}
+function searchProduct() {
+    let listRender = [];
+    let valueInput = document.getElementById("search").value.toUpperCase();
+    for (let i = 0; i < listProduct.length; i++) {
+        if (listProduct[i].name.toUpperCase().indexOf(valueInput) != -1){
+            console.log("11111");
+            listRender.push(listProduct[i])
+        }
+  }
+    renderListProducts(listRender);
 }
